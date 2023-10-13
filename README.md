@@ -9,6 +9,12 @@ The design of the selected search result is customizable in 2 modes: simple and 
 
 ![](./img/previewExample.png)
 
+# Google Web Store
+If there is enough deman, I'll release the extenion on the Google Web Store :)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z4Q2QF5)
+
+
+
 # Troubleshooting
 The extension should be working with all search sites of google, nevertheless if your site is not working please use one of the domains:
 
