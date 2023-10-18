@@ -132,7 +132,7 @@ getCSS()
 
 document.addEventListener('keydown', function(event) {
     const key = event.key;
-    if (!(textarea === document.activeElement)){
+    if (!((textarea === document.activeElement)||(document.querySelector("input[type='text']") === document.activeElement))){
     switch (key) {
         case "ArrowUp":
             try{
