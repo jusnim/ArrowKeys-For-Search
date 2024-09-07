@@ -1,17 +1,17 @@
 var results = [];
-let searchbarElement = document.querySelector(
-  ".HeaderForm-InputWrapper > input"
-);
 
 function getResults() {
   return results;
 }
 
 function getSearchbarElement() {
-  return searchbarElement;
+  return document.querySelector(
+    ".HeaderForm-InputWrapper > input"
+  );;
 }
 
 function trackSelectableResults() {
+  results = [];
   document.querySelectorAll("#search-result > li[data-cid]").forEach((el) => {
     if (results.includes(el)) {
       return;

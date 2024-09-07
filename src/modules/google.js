@@ -1,22 +1,25 @@
 var results = [];
-let searchbarElement = document.querySelector("textarea");
 
 function getResults() {
   return results;
 }
 function getSearchbarElement() {
-  return searchbarElement;
+  return document.querySelector("textarea");;
 }
 
 function trackSelectableResults() {
-  console.log(results);
   results = [];
   linkSet = [];
 
   // all links
-  linkSet = document
-    .querySelector("#center_col")
-    .querySelectorAll("a[ping][jsname]");
+  document
+    .querySelector("#search")
+    .querySelectorAll("a")
+    .forEach((a) => {
+      if (a.querySelectorAll("cite").length > 0) {
+        linkSet.push(a);
+      }
+    });
 
   // APPROACH:
   // finding for every link the div which:

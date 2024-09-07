@@ -1,16 +1,16 @@
 // replace Foo with corresponding elements
 var results = [];
-let searchbarElement = FOO;
 
 function getResults() {
   return results;
 }
 
 function getSearchbarElement() {
-  return searchbarElement;
+  return FOO;
 }
 
 function trackSelectableResults() {
+  results = [];
   FOO.forEach((el) => {
     if (results.includes(el)) {
       return;

@@ -13,7 +13,7 @@
 // get the results, that will be stylized
 
 // --- let getSearchbarElement()
-// used for selection of the searchbar
+// get the searchbar - used for selection of the searchbar
 
 // firefox and chrome support
 if (typeof browser === "undefined") {
@@ -23,9 +23,10 @@ if (typeof browser === "undefined") {
 var selectedElement = null;
 let selectedElementIndex = -1;
 
-addListener();
+document.addEventListener("DOMContentLoaded", init, false);
 
 function init() {
+  addListener();
   injectCSS();
   trackSelectableResults();
   console.log("Arrow Navigation started");
@@ -34,10 +35,17 @@ function init() {
 async function injectCSS() {
   let styleElement = document.createElement("style");
   styleElement.id = "arrowNavigationCSS";
-  styleElement.innerText = await browser.storage.local.get("css").then((e) => {
+
+  css = await browser.storage.local.get("css").then((e) => {
     return e.css;
   });
-  document.head.appendChild(await styleElement);
+  styleElement.innerText = css == null ? await returnSimpleCSS() : css
+
+  async function inject(){document.head.appendChild(await styleElement)}
+  // inject as fast as possible
+  inject()
+  // inject afterwards again, for correct
+  window.addEventListener('load', inject, false)
 }
 
 function selectSearchBar() {
@@ -45,7 +53,12 @@ function selectSearchBar() {
     selectedElement.classList.remove("activeSelected");
   }
   selectedElement = null;
-  getSearchbarElement().focus();
+
+  searchbarElement = getSearchbarElement()
+  searchbarElement.setSelectionRange(0, searchbarElement.value.length)
+  document.activeElement.blur()
+  searchbarElement.click();
+  searchbarElement.focus();
 }
 
 function selectElement(div) {
@@ -81,13 +94,9 @@ function selectNextElement() {
 }
 
 function addListener() {
-  // injecting css after loaded
-  window.addEventListener("load", init, false);
-
   // update style is changed in extension
   browser.runtime.onMessage.addListener((message) => {
     if (message.message === "CSSChange") {
-      console.log("yey");
       document.head.removeChild(document.getElementById("arrowNavigationCSS"));
       injectCSS();
     }

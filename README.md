@@ -1,6 +1,12 @@
 # ArrowKeys For Search
 **ArrowKeys For Search** is a browser extension for various search engines. \
-While searching on the web, you can navigate through the corresponding search results convenient via the arrow keys. It's also possible to return to the searchbar via those keys and with `Enter` a result can be *'clicked'*, if selected.
+While searching on the web, you can navigate through the corresponding search results convenient via the arrow keys. It's also possible to return to the searchbar via those keys. With `Enter` a result can be *'clicked'*, if selected.
+
+## Features
+- customize the selection border in simple or custom css mode
+- navigate through the results with up and down arrow keys
+- press enter to open desired result
+- navigate back to the searchbar with arrowup
 
 ## supported search engines
 - Google

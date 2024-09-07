@@ -1,15 +1,15 @@
 var results = [];
-let searchbarElement = document.getElementById("search_form_input");
 
 function getResults() {
   return results;
 }
 
 function getSearchbarElement() {
-  return searchbarElement;
+  return document.getElementById("search_form_input");
 }
 
 function trackSelectableResults() {
+  results = [];
   document
     .querySelectorAll(".react-results--main > li[data-layout='organic']")
     .forEach((el) => {

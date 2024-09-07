@@ -1,16 +1,16 @@
 var results = [];
-let searchbarElement = document.querySelector(
-  "form[data-testid='mainSearchBar'] > div > input"
-);
 
 function getResults() {
   return results;
 }
 function getSearchbarElement() {
-  return searchbarElement;
+  return document.querySelector(
+    "form[data-testid='mainSearchBar'] > div > input"
+  );;
 }
 
 function trackSelectableResults() {
+  results = [];
   document.querySelectorAll("div[data-testid='webResult']").forEach((el) => {
     if (results.includes(el)) {
       return;

@@ -1,17 +1,17 @@
 var results = [];
-let searchbarElement = document.querySelector(
-  "input[data-test-id='search-form-input']"
-);
 
 function getResults() {
   return results;
 }
 
 function getSearchbarElement() {
-  return searchbarElement;
+  return document.querySelector(
+    "input[data-test-id='search-form-input']"
+  );
 }
 
 function trackSelectableResults() {
+  results = [];
   document
     .querySelectorAll("div[data-test-id='mainline-result-web']")
     .forEach((el) => {

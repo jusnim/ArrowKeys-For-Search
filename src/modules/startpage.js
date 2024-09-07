@@ -1,13 +1,12 @@
 var results = [];
-let searchbarElement = document.querySelector(".search-form-input");
-
 function getResults() {
   return results;
 }
 function getSearchbarElement() {
-  return searchbarElement;
+  return document.querySelector(".search-form-input");;
 }
 function trackSelectableResults() {
+  results = [];
   document.querySelectorAll(".result").forEach((el) => {
     if (results.includes(el)) {
       return;
