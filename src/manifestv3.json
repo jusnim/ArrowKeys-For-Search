@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "version": "1.0",
-    "name": "Google Arrow Navigation",
-    "description": "Adds to selections in google search, which are controllable by the arrow keys. A link can be 'clicked' with Enter",
+    "version": "2.0",
+    "name": "ArrowKeys For Search",
+    "description": "Arrow Keys can be used to navigate convenient through search results of various search engines. Pages like Google, Startpage, Qwant and Ecosia are supported. A link can be 'clicked' with Enter",
     "content_scripts": [
         {
             "matches": [
@@ -382,6 +382,67 @@
                 "https://*.google.cat/search*"
             ],
             "js": [
+                "./modules/google.js",
+                "main.js"
+            ]
+        },
+        {
+            "matches": [
+                "http://*.startpage.com/sp/search*",
+                "https://*.startpage.com/sp/search*"
+            ],
+            "js": [
+                "./modules/startpage.js",
+                "main.js"
+            ]
+        },
+        {
+            "matches": [
+                "http://www.qwant.com/?q*",
+                "https://www.qwant.com/?q*"
+            ],
+            "js": [
+                "./modules/qwant.js",
+                "main.js"
+            ]
+        },
+        {
+            "matches": [
+                "http://www.qwant.com/?q*",
+                "https://www.qwant.com/?q*"
+            ],
+            "js": [
+                "./modules/qwant.js",
+                "main.js"
+            ]
+        },
+        {
+            "matches": [
+                "http://www.ecosia.org/search*",
+                "https://www.ecosia.org/search*"
+            ],
+            "js": [
+                "./modules/ecosia.js",
+                "main.js"
+            ]
+        },
+        {
+            "matches": [
+                "http://duckduckgo.com/*q=*",
+                "https://duckduckgo.com/*q=*"
+            ],
+            "js": [
+                "./modules/duckduckgo.js",
+                "main.js"
+            ]
+        },
+        {
+            "matches": [
+                "http://yandex.com/search/*",
+                "https://yandex.com/search/*"
+            ],
+            "js": [
+                "./modules/yandex.js",
                 "main.js"
             ]
         }

@@ -1,170 +1,127 @@
+////////////// Given by Search Engine Modules //////////////
+// --- trackSelectableResults()
+// Appends HTML Elements to return of getResults(), so they can be stylized
+//
+// --- updateScrollPosition()
+// updates the scroll position each time when selecting another search result
+// parameters are depending on padding, margin, height of various Element of each Site
+//
+// --- setFocus()
+// focusses specific search engine depending elements for appropriate enter presses
+//
+// --- getResults()
+// get the results, that will be stylized
+
+// --- let getSearchbarElement()
+// used for selection of the searchbar
+
+// firefox and chrome support
 if (typeof browser === "undefined") {
-    var browser = chrome;
+  var browser = chrome;
 }
 
-var results=[];
-var results_a=[];
-function updateSearchResults(){
-    //get all a withs cites included
-    aHasCite =[]
-    document.querySelectorAll("a").forEach(a => {if (a.querySelectorAll("cite").length>0 && !results_a.includes(a)){aHasCite.push(a)}})
-    aHasCite.forEach(e=>{results_a.push(e)});
+var selectedElement = null;
+let selectedElementIndex = -1;
 
-    for (let i=0; i<aHasCite.length;i++){
-        // for (let i=0; i<6;i++){
+addListener();
 
-        // copy without aHasCite[i] element - worked
-        let tmpArr=[aHasCite.length-1]
-        let skip =0;
-        for (let n=0; n<aHasCite.length;n++){
-            if(n==i){
-                skip=1
-            }
-            tmpArr[n]=aHasCite[n+skip]
-        }
-         
-        // //skip i
-        let potentialResults = document.querySelector("#center_col")
+function init() {
+  injectCSS();
+  trackSelectableResults();
+  console.log("Arrow Navigation started");
+}
 
-        let goodResults=[]
-        // go through all potential divs
-        potentialResults.querySelectorAll("div").forEach(div =>{
+async function injectCSS() {
+  let styleElement = document.createElement("style");
+  styleElement.id = "arrowNavigationCSS";
+  styleElement.innerText = await browser.storage.local.get("css").then((e) => {
+    return e.css;
+  });
+  document.head.appendChild(await styleElement);
+}
 
-            // removed results, where multipile results are in 1 div
-            let containsCheck = (duplicate) => div.contains(duplicate)
-            if(div.contains(aHasCite[i]) && !tmpArr.some(containsCheck)){
-                goodResults.push(div)
-            }
-        })
+function selectSearchBar() {
+  if (selectedElement != null) {
+    selectedElement.classList.remove("activeSelected");
+  }
+  selectedElement = null;
+  getSearchbarElement().focus();
+}
 
-        // search for div with maximum size
-        let result;
-            let max=0;
-            goodResults.forEach(el =>{
-                let value = el.getBoundingClientRect().height * el.getBoundingClientRect().width
-                if(value > max){
-                    max=value
-                    result=el
-                }
-            })
-            if(result.querySelector("div[data-snc]")==null){
-                results.push(result)
-            }
-            else{ 
-                results.push(result.querySelector("div[data-snc]"))
-            }
+function selectElement(div) {
+  if (selectedElement != null) {
+    selectedElement.classList.remove("activeSelected");
+  }
+  selectedElement = div;
+  selectedElement.classList.add("activeSelected");
+
+  setFocus();
+}
+
+function selectPreviousElement() {
+  if (selectedElementIndex < 1) {
+    selectedElementIndex--;
+    selectSearchBar();
+  }
+  if (selectedElementIndex >= 1) {
+    selectedElementIndex--;
+    selectElement(getResults()[selectedElementIndex]);
+  }
+}
+
+function selectNextElement() {
+  trackSelectableResults();
+
+  // triggering on last entry
+  if (selectedElementIndex >= getResults().length - 1) {
+    return;
+  }
+  selectedElementIndex++;
+  selectElement(getResults()[selectedElementIndex]);
+}
+
+function addListener() {
+  // injecting css after loaded
+  window.addEventListener("load", init, false);
+
+  // update style is changed in extension
+  browser.runtime.onMessage.addListener((message) => {
+    if (message.message === "CSSChange") {
+      console.log("yey");
+      document.head.removeChild(document.getElementById("arrowNavigationCSS"));
+      injectCSS();
     }
-}
+  });
 
-function focusTab(){
-    let universe = document.querySelectorAll('input, button, select, textarea, a[href]');
-    let list = Array.prototype.filter.call(universe, function(item) {return item.tabIndex >= "0"});
-    let index = list.indexOf(selectedDiv.querySelector("a"));
-    list[index].focus();
-}
+  // when site is reloaded by cache, reassign selectedElement
+  // then: enter is working, otherwise not
+  window.addEventListener(
+    "pageshow",
+    () => {
+      selectedElement = document.querySelector(".activeSelected");
+      if (selectedElement != null) {
+        setFocus();
+      }
+    },
+    false
+  );
 
-function selectDiv(div){
-    if(selectedDiv != null){
-    selectedDiv.classList.remove("activeSelected");
-    }   
-    selectedDiv = div;
-    selectedDiv.classList.add("activeSelected");
-}
-
-// if up
-function selectPreviousElement(){
-    if(savedIndex<1&&savedIndex>0){
-        //only remove selected
-        selectedDiv.classList.remove("activeSelected");
-        selectedDiv = null;
-        savedIndex--
-    }
-    if(savedIndex>=1){
-        savedIndex--
-        selectDiv(results[savedIndex])
-    }
-}
-
-//if down
-function selectNextElement(){
-    //if last element dont respond
-    updateSearchResults()
-    if(!(savedIndex>=results.length-1)){
-        savedIndex++
-        selectDiv(results[savedIndex])
-    }
-}
-
-function updateScrollPosition(){
-    if (selectedDiv != null) {
-        window.requestAnimationFrame(() => {            
-
-                let padding1 = document.getElementById("appbar").getBoundingClientRect().height + document.getElementById("sfcnt").getBoundingClientRect().bottom;
-                let padding2 =0;
-                try{
-                    padding2=document.getElementById("taw").getBoundingClientRect().height
-                }
-                catch{}
-                
-                let allpadding = padding1 +padding2;
-                
-                let rect = selectedDiv.getBoundingClientRect();
-                let scrollY=rect.bottom-allpadding - window.innerHeight/3
-                if (scrollY < window.innerHeight/2){scrollY=0}
-                window.scrollTo(window.scrollX,scrollY);
-            }
-        )}
-}
-
-async function getCSS(){
-    let styleElement = document.createElement("style")
-    styleElement.innerText=await browser.storage.local.get("css").then(e=>{return e.css})
-    document.head.appendChild(await styleElement)
-}
-
-
-
-var selectedDiv = null;
-let savedIndex = -1;
-var css;
-let textarea = document.querySelector("textarea")
-getCSS()
-
-document.addEventListener('keydown', function(event) {
-    const key = event.key;
-    if (!((textarea === document.activeElement)||(document.querySelector("input[type='text']") === document.activeElement))){
-    switch (key) {
+  // keypress, arrow navigation
+  document.addEventListener("keydown", function (event) {
+    if (!(getSearchbarElement() === document.activeElement)) {
+      switch (event.key) {
         case "ArrowUp":
-            try{
-            event.preventDefault();
-            selectPreviousElement();
-            updateScrollPosition();
-            }
-            catch{}
-            break;
+          event.preventDefault();
+          selectPreviousElement();
+          updateScrollPosition();
+          break;
         case "ArrowDown":
-            try{
-            event.preventDefault();
-            selectNextElement();
-            updateScrollPosition();
-            }
-            catch{}
-            break;
-        case "Tab":
-            focusTab()
-            break;
-        case "Enter":
-            event.preventDefault();
-            try{
-                let span = selectedDiv.querySelector("div > div[role='button']");
-                if(span.querySelector("svg")!=null){
-                    throw new Exception("no svg");
-                }
-                span.querySelector("span").setAttribute("tabindex","-1")
-            span.click()
-            }
-            catch{selectedDiv.querySelector("a").click()}
-            break;
+          event.preventDefault();
+          selectNextElement();
+          updateScrollPosition();
+          break;
+      }
+      return;
     }
+  });
 }
-});

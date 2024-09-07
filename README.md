@@ -1,23 +1,32 @@
-# GoogleArrowNavigation
-GoogleArrowNavigation is a browser extension for the google search website. You can navigate through search results via arrow keys
+# ArrowKeys For Search
+**ArrowKeys For Search** is a browser extension for various search engines. \
+While searching on the web, you can navigate through the corresponding search results convenient via the arrow keys. It's also possible to return to the searchbar via those keys and with `Enter` a result can be *'clicked'*, if selected.
+
+## supported search engines
+- Google
+- Startpage
+- Qwant
+- DuckDuckGo
+- Ecosia
+- Yandex
 
 # Install
 ### Firefox:
-You can download the extension on:
+You can download the extension on:\
 https://addons.mozilla.org/en-GB/firefox/addon/google-arrow-navigation/
 
 ### Chrome:
 Currently it's not available in Google Web Store, but you can download it the zip [releases](https://github.com/jusnim/GoogleArrowNavigation/releases) or alternatively load it in your browser as an unpacked version
-If there is enough demand, I'll release the extenion on the Google Web Store :)
+I'm looking forward to release on the Store.
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z4Q2QF5)
 
 # Design
-The design of the selected search result is customizable in 2 modes: simple and custom. You can customize in the extension UI via clicking on the extension icon
+The design of the selected search result is customizable in 2 modes: simple and custom.\
+![](./img/settings_simple.png)
+![](./img/settings_custom.png)\
 
-![](./img/previewExample.png)
+### Example
+![](./img/preview_example.png)
 
-# Troubleshooting
-The extension should be working with all search sites of google, nevertheless if your site is not working please use one of the domains:
-
-https://www.google.com/supported_domains
+# Support
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z4Q2QF5)

@@ -1,258 +1,195 @@
-
 if (typeof browser === "undefined") {
-    var browser = chrome;
+  var browser = chrome;
 }
 
-document.addEventListener("DOMContentLoaded",function (){
+document.addEventListener("DOMContentLoaded", function () {
+  let colorPicker;
 
+  window.addEventListener("load", startup, false);
 
-let colorPicker;
-window.addEventListener("load", startup, false);
+  const Defaults = {
+    borderWidth: 3,
+    borderMargin: 3,
+    borderRadius: 20,
+    borderPadding: 3,
+    borderColor: "#944b7c",
+    customMode: false,
+    darkMode: false,
+  };
 
-
-
-// load || init default values
-
-async function loadBorderWidth(){
-    let tmp = await browser.storage.local.get("borderWidth").then(e=>{return e.borderWidth});
-    return tmp==null ? 3 : tmp;
-}
-async function loadBorderColor(){
-    let tmp = await browser.storage.local.get("borderColor").then(e=>{return e.borderColor});
-    return tmp==null ? "#944b7c" : tmp;
-}
-
-async function loadBorderRadius(){
-    let tmp  = await browser.storage.local.get("borderRadius").then(e=>{return e.borderRadius});
-    return tmp==null ? 20 : tmp;
-}
-async function loadBorderPadding(){
-    let tmp = await browser.storage.local.get("borderPadding").then(e=>{return e.borderPadding});
-    return tmp==null ? 3 : tmp;
-}
-async function loadBorderMargin(){
-    let tmp = await browser.storage.local.get("borderMargin").then(e=>{return e.borderMargin});
-    return tmp==null ? 3 : tmp;
-}
-
-async function loadMode(){
-    let tmp = await browser.storage.local.get("mode").then(e=>{return e.mode});
-    return tmp==null ? 1 : tmp;
-}
-
-
-async function loadDarkMode(){
-    let tmp = await browser.storage.local.get("darkMode").then(e=>{return e.darkMode});
-    return tmp==null ? 1 : tmp;
-}
-
-async function loadCustomCSS(){
-    let tmp = await browser.storage.local.get("customCSS").then(e=>{return e.customCSS});
-    return tmp==null ? await loadGeneralCSS() : tmp;
-}
-
-async function loadGeneralCSS(){
-    let tmp = await browser.storage.local.get("css").then(e=>{return e.css});
-    if(tmp == null){
-        initSimpleCss()
+  // loading Values from localstorage or Defaults
+  async function loadValue(property) {
+    if (!Object.keys(Defaults).includes(property)) {
+      console.err(
+        `Given Property (${property}) is not supported and has no default value`
+      );
+      return;
     }
-    return await browser.storage.local.get("css").then(e=>{return e.css});
-}
+    let tmp = await browser.storage.local.get(property).then((e) => {
+      return e[property];
+    });
+    return tmp == null ? Defaults[property] : tmp;
+  }
 
-async function initSimpleCss(){
-    await browser.storage.local.set({"css" : await returnSimpleCSS()})
-}
-
-async function updateGeneralCSS(css){
-    await browser.storage.local.set({"css" : css})
-}
-
-async function updateCustomCSS(customCss){
-    console.log("ei")
-    await browser.storage.local.set({"customCSS" : customCss})
-    updateCSS()
-}
-async function updateMode(event) {
-    await browser.storage.local.set({"mode" : event.target.checked})
-    updateCSS()
-}
-
-async function updateDarkMode(event) {
-    await browser.storage.local.set({"darkMode" : event.target.checked})
-    await changeDarkmode()
-}
-
-async function updateColor(event, otherItem) {
-    otherItem.value = event.target.value;
-    await browser.storage.local.set({"borderColor" : event.target.value})
-    updateCSS()
-}
-
-async function updateWidth(event) {
-    await browser.storage.local.set({"borderWidth" : event.target.value})
-    updateCSS()
-}
-async function updateRadius(event) {
-    await browser.storage.local.set({"borderRadius" : event.target.value})
-    updateCSS()
-}
-async function updatePadding(event) {
-    await browser.storage.local.set({"borderPadding" : event.target.value})
-    updateCSS()
-}
-async function updateMargin(event) {
-    await browser.storage.local.set({"borderMargin" : event.target.value})
-    updateCSS()
-}
-
-async function updateMargin(event) {
-    await browser.storage.local.set({"borderMargin" : event.target.value})
-    updateCSS()
-}
-
-async function changeDarkmode(){
-    try{
-    await document.querySelector("#darkModeCSS").remove()
+  // return function for updating/setting values in localStorage
+  function createUpdateFunction(property, e, skipUpdateCSS = false) {
+    if (!Object.keys(Defaults).includes(property)) {
+      console.err(
+        `Given Property (${property}) is not supported and has no default value`
+      );
+      return;
     }
-    catch{}
-    let linkElement = document.createElement("link")
-    await linkElement.setAttribute("rel","stylesheet")
-    await linkElement.setAttribute("id","darkModeCSS")
-    if (await loadDarkMode()){
-        await linkElement.setAttribute("id","darkModeCSS")
-        await linkElement.setAttribute("href","googlePreviewDark.css")
+
+    let value = e;
+    if (e instanceof Event) {
+      value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
     }
-    else{
-        await linkElement.setAttribute("href","googlePreviewWhite.css")
+
+    return async function () {
+      await browser.storage.local.set({ [property]: value });
+
+      browser.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        browser.tabs.sendMessage(tabs[0].id, { message: "CSSChange" });
+      });
+
+      if (skipUpdateCSS) {
+        return;
+      }
+      updateCSS();
+    };
+  }
+
+  async function returnSimpleCSS() {
+    return `.activeSelected {
+    border-style: solid;
+    border-width: ${await loadValue("borderWidth")}px;
+    border-color: ${await loadValue("borderColor")};
+    border-radius: ${await loadValue("borderRadius")}px;
+    padding: ${await loadValue("borderPadding")}%;
+    margin-top: ${await loadValue("borderMargin")}%;
+    margin-bottom: ${await loadValue("borderMargin")}%;
+}`;
+  }
+
+  async function showTextarea(bool) {
+    let textareaDiv = document.getElementById("textareaDiv");
+    let settings = document.getElementById("settings");
+    console.log(textareaDiv.style.display, settings.style.display);
+    if (bool) {
+      textareaDiv.style.display = "inline";
+      settings.style.display = "none";
+    } else {
+      textareaDiv.style.display = "none";
+      settings.style.display = "flex";
     }
-    document.head.appendChild(await linkElement)
-}
+  }
 
-async function returnSimpleCSS(){
-    let simpleCSS =`.activeSelected {
-        border-style: solid;
-        border-width: ${await loadBorderWidth()}px;
-        border-color: ${await loadBorderColor()};
-        border-radius: ${await loadBorderRadius()}px;
-        padding: ${await loadBorderPadding()}%;
-        margin-top: ${await loadBorderMargin()}%;
-        margin-bottom: ${await loadBorderMargin()}%;
-    }`
-    return simpleCSS
-}
+  async function setColorTheme() {
+    document.querySelectorAll(".slider").forEach(async (el) => {
+      el.style = `accent-color: ${await loadValue("borderColor")}`;
+    });
+    document.querySelector(
+      "input + .toggleSwitch"
+    ).style = `background-color: ${await loadValue("borderColor")}`;
+    document.querySelector(
+      "#transferFromSimpleMode"
+    ).style = `box-shadow: 0px 0px 5px ${await loadValue(
+      "borderColor"
+    )}, 0px 0px 3px white; `;
+  }
 
-async function updatePreview(){
-    console.log("previwe")
-    try{
-    document.querySelectorAll("style").forEach(e=>{e.remove()})
-    }
-    catch{
-
-    }
-    let styleElement = document.createElement("style")
-    styleElement.innerText=await loadGeneralCSS()
-    document.head.appendChild(styleElement)
-}
-
-async function showTextarea(bool){
-    let textareaDiv = document.getElementById("textareaDiv")
-    let settings = document.getElementById("settings")
-    if(bool){
-        textareaDiv.style.display = "inline";
-        settings.style.display = "none";
-    }
-    else{
-        textareaDiv.style.display = "none";
-        settings.style.display = "flex";
-    }
-}
-
-
-
-async function startup() {
-
-    let editor = CodeMirror.fromTextArea(document.getElementById("textarea"), {mode: "css", theme: "ambiance", lineNumbers: true});
-
-    editor.setValue(await loadCustomCSS());
-    editor.on("change",  ()=> {
-        console.log("fdsf")
-        updateCustomCSS(editor.getValue());
-    }, false);
-
-    transferButton=document.getElementById('transferFromSimpleMode');
-    transferButton.addEventListener('click', async ()=>{
-        editor.setValue(await returnSimpleCSS());
-        await updateCustomCSS(editor.getValue());
-    },false);
-
-    
-    
-    customCssSwitch = document.getElementById('customCssSwitch');
-    customCssSwitch.checked = await loadMode();
-    customCssSwitch.addEventListener('click', updateMode,false);
-    customCssSwitch.select();
-
-    darkModeSwitch = document.getElementById('darkModeSwitch');
-    darkModeSwitch.checked = await loadDarkMode();
-    await changeDarkmode()
-    darkModeSwitch.addEventListener('click', updateDarkMode,false);
-    darkModeSwitch.select();
-
-    
-
-    // colorpicker
-    colorPicker = document.querySelector("#color-picker");
-    colorPicker.value = await loadBorderColor();
-    colorCode = document.querySelector("#color-code");
-    colorCode.value = await colorPicker.value
-
-    colorCode.addEventListener("input", (event) =>{updateColor(event, colorPicker)}, false);
-    colorCode.select();
-    colorPicker.addEventListener("input", (event) =>{updateColor(event, colorCode)}, false);
-    colorPicker.select();
-    
-
-    // borderwidth
-    borderWidth = document.querySelector("#borderWidth");
-    borderWidth.value = await loadBorderWidth();
-    borderWidth.addEventListener("change", updateWidth, false);
-    borderWidth.select()
-
-    //borderradius
-    borderRadius = document.querySelector("#borderRadius");
-    borderRadius.value = await loadBorderRadius();
-    borderRadius.addEventListener("change", updateRadius, false);
-    borderPadding.select()
-
-    // borderpadding
-    borderPadding = document.querySelector("#borderPadding");
-    borderPadding.value = await loadBorderPadding();
-    borderPadding.addEventListener("change", updatePadding, false);
-    borderPadding.select()
-
-    // borderMargin
-    borderMargin = document.querySelector("#borderMargin");
-    borderMargin.value = await loadBorderMargin();
-    borderMargin.addEventListener("change", updateMargin, false);
-    borderMargin.select()
-
-    
-    await updateCSS();
-}
-
-async function updateCSS(){
+  async function updateCSS() {
     //update Css depending on css mode "simple" or "customCss"
-    if(await loadMode()){//TODO
-        await showTextarea(true)
-        customCSS = await loadCustomCSS()
-        await updateGeneralCSS(customCSS)
-        }
-    else{
-        await showTextarea(false)
-        await updateGeneralCSS(await returnSimpleCSS())
+    if (await loadValue("customMode")) {
+      await showTextarea(true);
+      await createUpdateFunction("css", await loadValue("customCSS"), true)();
+    } else {
+      await showTextarea(false);
+      await createUpdateFunction("css", await returnSimpleCSS(), true)();
     }
-    await updatePreview();
-}
-})
-  
-  
+    setColorTheme();
+    document.getElementById("color-code").blur();
+  }
+
+  async function startup() {
+    //////// customCSS Editor ////////
+
+    // init css with simpleCSS
+    Defaults.customCSS = returnSimpleCSS();
+    Defaults.css = returnSimpleCSS();
+
+    let editor = CodeMirror.fromTextArea(document.getElementById("textarea"), {
+      mode: "css",
+      theme: "simple_ambiance",
+    });
+
+    editor.setValue(await loadValue("customCSS"));
+    editor.on(
+      "change",
+      () => {
+        createUpdateFunction("customCSS", editor.getValue())();
+      },
+      false
+    );
+
+    // setup transfer button - simple css to custom
+    transferButton = document.getElementById("transferFromSimpleMode");
+    transferButton.addEventListener(
+      "click",
+      async () => {
+        editor.setValue(await returnSimpleCSS());
+        await createUpdateFunction("customCSS", editor.getValue())();
+      },
+      false
+    );
+
+    //////// setup input for updating localStorage ////////
+
+    async function setupInput(property, type) {
+      tmp = document.getElementById(`${property}-input`);
+      tmp.value = await loadValue(property);
+      tmp.addEventListener(
+        type,
+        (event) => {
+          createUpdateFunction(property, event)();
+        },
+        false
+      );
+      tmp.select();
+    }
+
+    await setupInput("customMode", "click");
+    tmp.checked = await loadValue("customMode");
+    await setupInput("borderWidth", "change");
+    await setupInput("borderRadius", "change");
+    await setupInput("borderPadding", "change");
+    await setupInput("borderMargin", "change");
+
+    // bidirectional bound of color picker and colorcode
+    await setupInput("borderColor", "change");
+    colorPicker = document.getElementById("borderColor-input");
+    colorCode = document.querySelector("#color-code");
+
+    colorCode.value = await colorPicker.value;
+
+    colorPicker.addEventListener(
+      "input",
+      (event) => {
+        colorCode.value = event.target.value;
+      },
+      false
+    );
+    colorCode.addEventListener(
+      "input",
+      (event) => {
+        if (event.target.value[0] == "#" && event.target.value.length == 7) {
+          colorPicker.value = event.target.value;
+          colorPicker.dispatchEvent(new Event("change"));
+        }
+      },
+      false
+    );
+    colorCode.select();
+    await updateCSS();
+  }
+});

@@ -1,276 +1,89 @@
 <html>
-
-<head>
-    <link rel="stylesheet" href="popup.css">
-    <link rel="stylesheet" href="./codemirror/codemirror.css">
-    <link rel="stylesheet" href="./codemirror/ambiance.css">
+  <head>
+    <link rel="stylesheet" href="popup.css" />
+    <link rel="stylesheet" href="./codemirror/codemirror.css" />
+    <link rel="stylesheet" href="./codemirror/simple_ambiance.css" />
     <script src="./codemirror/codemirror.js"></script>
     <script src="./codemirror/css.js"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="topBar">
-        <div id="underTitle">
-            <div class="switchDiv">
-                <h4>simple</h4>
-                <label class="switch">
-                    <input id="customCssSwitch" type="checkbox">
-                    <span class="slidert round"></span>
-                </label>
-                <h4>customCSS</h4>
-            </div>
-            <div class="switchDiv">
-                <h4>whiteMode</h4>
-                <label class="switch">
-                    <input id="darkModeSwitch" type="checkbox">
-                    <span class="slidert round"></span>
-                </label>
-                <h4>darkMode</h4>
-            </div>
+      <div id="underTitle">
+        <div class="switchDiv">
+          <h4>simple</h4>
+          <label class="switch">
+            <input id="customMode-input" type="checkbox" />
+            <span class="toggleSwitch round"></span>
+          </label>
+          <h4>custom</h4>
         </div>
-
+      </div>
+    </div>
+    <div id="noticeContainer">
+      <p id="notice">open your search site :3</p>
     </div>
     <main>
-        <div id="textareaDiv">
-            <button id="transferFromSimpleMode" value="transferFromSimpleMode">transferFromSimpleMode</button>
-            <textarea id="textarea" style="height: 20px"></textarea>
+      <div id="textareaDiv">
+        <button id="transferFromSimpleMode" value="transferFromSimpleMode">
+          transfer CSS <br />
+          from simple
+        </button>
+        <textarea id="textarea"></textarea>
+      </div>
+      <div id="settings">
+        <div class="settingElement">
+          <label for="borderColor-input">Color:</label>
+          <br />
+          <div id="color-container">
+            <input id="borderColor-input" type="color" value="#944b7c" />
+            <input id="color-code" type="text" maxlength="7" value="#944b7c" />
+          </div>
         </div>
-        <div id="settings">
-            <div class="settingElement">
-                <label for="color-picker">Color:</label>
-                <div>
-                    <input id="color-picker" type="color" value="#944b7c">
-                    <input id="color-code" type="text" maxlength="7" value="#944b7c">
-                </div>
-
-            </div>
-
-            <div class="settingElement">
-                <label for="borderWidth">BorderWidth:</label>
-                <input id="borderWidth" type="range" min="0" max="50" class="slider">
-            </div>
-
-            <div class="settingElement">
-                <label for="borderRadius">BorderRadius:</label>
-                <input id="borderRadius" type="range" min="0" max="100" class="slider">
-            </div>
-
-            <div class="settingElement">
-                <label for="borderPadding">BorderPadding:</label>
-                <input id="borderPadding" type="range" min="0" max="15" class="slider">
-            </div>
-            <div class="settingElement">
-                <label for="borderMargin">BorderMargin:</label>
-                <input id="borderMargin" type="range" min="-5" max="15" class="slider">
-            </div>
-
+        <div class="settingElement">
+          <label for="borderWidth-input">BorderWidth:</label>
+          <input
+            id="borderWidth-input"
+            type="range"
+            min="0"
+            max="50"
+            class="slider"
+          />
         </div>
-        <div id="leftborder"></div>
 
-
-        <div id="previewDiv" class="Ww4FFb" style="pointer-events: none;">
-            <div class="preview">
-                <div class="ULSxyf ">
-                    <div class="MjjYud">
-                        <div jscontroller="SC7lYd" class="g Ww4FFb vt6azd tF2Cxc asEBEc" lang="en" style="width:600px"
-                            jsaction="QyLbLe:OMITjf;ewaord:qsYrDe;xd28Mb:A6j43c" data-hveid="CCoQAA"
-                            data-ved="2ahUKEwjOlOPKhd2BAxUdS_EDHVDWCMsQFSgAegQIKhAA">
-                            <div class="N54PNb BToiNc cvP2Ce" data-snc="ih6Jnb_gBGQw">
-                                <div class="kb0PBd cvP2Ce jGGQ5e" data-snf="x5WNvb" data-snhf="0">
-
-                                    <div class="kb0PBd cvP2Ce" data-sncf="1" data-snf="nke7rc">
-                                        <div class="VwiC3b yXK7lf lyLwlc yDYNvb W8l4ac lEBKkf"
-                                            style="-webkit-line-clamp:2">
-                                            <span><em>YouTube</em> is an American online video sharing and social
-                                                media
-                                                platform
-                                                headquartered in San Bruno, California, United States. Accessible
-                                                worldwide,
-                                                it
-                                                was&nbsp;...</span>
-                                        </div>
-                                    </div>
-                                    <div class="kb0PBd cvP2Ce" data-sncf="2" data-snf="mCCBcf">
-                                        <div class="fG8Fp uo4vr"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ULSxyf ">
-                        <div class="MjjYud ">
-                            <div jscontroller="SC7lYd" class="g Ww4FFb vt6azd tF2Cxc asEBEc" lang="en"
-                                style="width:600px" jsaction="QyLbLe:OMITjf;ewaord:qsYrDe;xd28Mb:A6j43c"
-                                data-hveid="CCoQAA" data-ved="2ahUKEwjOlOPKhd2BAxUdS_EDHVDWCMsQFSgAegQIKhAA">
-                                <div class="N54PNb BToiNc cvP2Ce activeSelected" data-snc="ih6Jnb_gBGQw">
-                                    <div class="kb0PBd cvP2Ce jGGQ5e" data-snf="x5WNvb" data-snhf="0">
-                                        <div class="yuRUbf">
-                                            <div><span jscontroller="msmzHf"
-                                                    jsaction="rcuQ6b:npT2md;PYDNKe:bLV6Bd;mLt3mc"><a jsname="UWckNb"
-                                                        href="https://en.wikipedia.org/wiki/YouTube" data-jsarwt="1"
-                                                        data-usg="AOvVaw3Qhn48hHTUoac6HrTHyZeE"
-                                                        data-ved="2ahUKEwjOlOPKhd2BAxUdS_EDHVDWCMsQFnoECB4QAQ"><br>
-                                                        <h3 class="LC20lb MBeuO DKV0Md">YouTube</h3>
-                                                        <div class="notranslate TbwUpd NJjxre iUh30 ojE3Fb"><span
-                                                                class="H9lube">
-                                                                <div class="eqA2re NjwKYd Vwoesf" aria-hidden="true">
-                                                                    <img class="XNo5Ab"
-                                                                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAM1BMVEUAAAD+/v41NTUBAQEAAABZWVknJycWFhaZmZmIiIjp6ellZWXMzMzX19eurq54eHhHR0dExXFyAAAAAXRSTlMAQObYZgAAAPtJREFUeAG8kAWOBDAMA9d1Sin+/7XXbpZZdBaURlMrhx28ycGCD/n0bvkBwJf8C+AoIvRAWGtMyHGtCWkfxW+DRopuuIjUtTQJDStevNoXWaRjRSllLd1O8FFhgEZx2BmkAmHC8HwpOUyxSA50VqOjXgAl50URvNWPBRcAnmwnhbcduthqQCO9KYTFBG7eDWoK1T47AZX9DuiUYT/TuhX3MGpnD51kPprSA9Dl+BCKl7jWHHEHmHsLWhNZZMxPQCLTEuy+cYF6D9i8Q5e2Lcyz4AGwKdJbX0p7AegC2qnvxAsAxQRAYH8J6Dg1a/lvpKRJinMW4cxLMPsDAJjSCaG8cPmnAAAAAElFTkSuQmCC"
-                                                                        style="height:18px;width:18px" alt=""
-                                                                        data-atf="4" data-frt="0">
-                                                                </div>
-                                                            </span>
-                                                            <div><span class="VuuXrf">Wikipedia</span>
-                                                                <div class="byrV5b"><cite
-                                                                        class="qLRx3b tjvcx GvPZzd cHaqb"
-                                                                        role="text">https://en.wikipedia.org<span
-                                                                            class="dyjrff ob9lvb" role="text"> ›
-                                                                            wiki ›
-                                                                            YouTube</span></cite></div>
-                                                            </div>
-                                                        </div>
-                                                    </a></span>
-                                                <div class="B6fmyf byrV5b Mg1HEd">
-                                                    <div class="TbwUpd iUh30 ojE3Fb"><span class="H9lube">
-                                                            <div class="eqA2re NjwKYd" style="height:18px;width:18px">
-                                                            </div>
-                                                        </span>
-                                                        <div><span class="VuuXrf">Wikipedia</span>
-                                                            <div class="byrV5b"><cite class="qLRx3b tjvcx GvPZzd cHaqb"
-                                                                    role="text">https://en.wikipedia.org<span
-                                                                        class="dyjrff ob9lvb" role="text"> › wiki ›
-                                                                        YouTube</span></cite>
-                                                                <div class="eFM0qc BCF2pd iUh30"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="csDOgf BCF2pd L48a4c">
-                                                        <div jscontroller="exgaYe" data-bsextraheight="0"
-                                                            data-darkmode="true" data-isdesktop="true"
-                                                            jsdata="l7Bhpb;_;B1XyUU cECq7c;_;B1XyUc"
-                                                            data-ved="2ahUKEwjOlOPKhd2BAxUdS_EDHVDWCMsQ2esEegQIHhAJ">
-                                                            <div role="button" tabindex="0" jsaction="RvIhPd"
-                                                                jsname="I3kE2c" class="iTPLzd rNSxBe lUn2nc"
-                                                                style="position:absolute"
-                                                                aria-label="About this result">
-                                                                <span jsname="czHhOd" class="D6lY4c mBswFe"><span
-                                                                        jsname="Bil8Ae" class="xTFaxe z1asCe"
-                                                                        style="height:18px;line-height:18px;width:18px"
-                                                                        jsportable="sass-ported"><svg focusable="false"
-                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                            viewBox="0 0 24 24">
-                                                                            <path
-                                                                                d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z">
-                                                                            </path>
-                                                                        </svg></span></span>
-                                                            </div><span jsname="zOVa8"
-                                                                data-ved="2ahUKEwjOlOPKhd2BAxUdS_EDHVDWCMsQh-4GegQIHhAK"></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="kb0PBd cvP2Ce" data-sncf="1" data-snf="nke7rc">
-                                        <div class="VwiC3b yXK7lf lyLwlc yDYNvb W8l4ac lEBKkf"
-                                            style="-webkit-line-clamp:2">
-                                            <span><em>YouTube</em> is an American online video sharing and social
-                                                media
-                                                platform
-                                                headquartered in San Bruno, California, United States. Accessible
-                                                worldwide,
-                                                it
-                                                was&nbsp;...</span>
-                                        </div>
-                                    </div>
-                                    <div class="kb0PBd cvP2Ce" data-sncf="2" data-snf="mCCBcf">
-                                        <div class="fG8Fp uo4vr"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ULSxyf >
-                <div class=" MjjYud">
-                        <div jscontroller="SC7lYd" class="g Ww4FFb vt6azd tF2Cxc asEBEc" lang="en" style="width:600px"
-                            jsaction="QyLbLe:OMITjf;ewaord:qsYrDe;xd28Mb:A6j43c" data-hveid="CCoQAA"
-                            data-ved="2ahUKEwjOlOPKhd2BAxUdS_EDHVDWCMsQFSgAegQIKhAA">
-                            <div class="N54PNb BToiNc cvP2Ce" data-snc="ih6Jnb_gBGQw">
-                                <div class="kb0PBd cvP2Ce jGGQ5e" data-snf="x5WNvb" data-snhf="0">
-                                    <div class="yuRUbf">
-                                        <div><span jscontroller="msmzHf"
-                                                jsaction="rcuQ6b:npT2md;PYDNKe:bLV6Bd;mLt3mc"><a jsname="UWckNb"
-                                                    href="https://en.wikipedia.org/wiki/YouTube" data-jsarwt="1"
-                                                    data-usg="AOvVaw3Qhn48hHTUoac6HrTHyZeE"
-                                                    data-ved="2ahUKEwjOlOPKhd2BAxUdS_EDHVDWCMsQFnoECB4QAQ"><br>
-                                                    <h3 class="LC20lb MBeuO DKV0Md">YouTube</h3>
-                                                    <div class="notranslate TbwUpd NJjxre iUh30 ojE3Fb"><span
-                                                            class="H9lube">
-                                                            <div class="eqA2re NjwKYd Vwoesf" aria-hidden="true">
-                                                                <img class="XNo5Ab"
-                                                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAM1BMVEUAAAD+/v41NTUBAQEAAABZWVknJycWFhaZmZmIiIjp6ellZWXMzMzX19eurq54eHhHR0dExXFyAAAAAXRSTlMAQObYZgAAAPtJREFUeAG8kAWOBDAMA9d1Sin+/7XXbpZZdBaURlMrhx28ycGCD/n0bvkBwJf8C+AoIvRAWGtMyHGtCWkfxW+DRopuuIjUtTQJDStevNoXWaRjRSllLd1O8FFhgEZx2BmkAmHC8HwpOUyxSA50VqOjXgAl50URvNWPBRcAnmwnhbcduthqQCO9KYTFBG7eDWoK1T47AZX9DuiUYT/TuhX3MGpnD51kPprSA9Dl+BCKl7jWHHEHmHsLWhNZZMxPQCLTEuy+cYF6D9i8Q5e2Lcyz4AGwKdJbX0p7AegC2qnvxAsAxQRAYH8J6Dg1a/lvpKRJinMW4cxLMPsDAJjSCaG8cPmnAAAAAElFTkSuQmCC"
-                                                                    style="height:18px;width:18px" alt="" data-atf="4"
-                                                                    data-frt="0">
-                                                            </div>
-                                                        </span>
-                                                        <div><span class="VuuXrf">Wikipedia</span>
-                                                            <div class="byrV5b"><cite class="qLRx3b tjvcx GvPZzd cHaqb"
-                                                                    role="text">https://en.wikipedia.org<span
-                                                                        class="dyjrff ob9lvb" role="text"> › wiki ›
-                                                                        YouTube</span></cite></div>
-                                                        </div>
-                                                    </div>
-                                                </a></span>
-                                            <div class="B6fmyf byrV5b Mg1HEd">
-                                                <div class="TbwUpd iUh30 ojE3Fb"><span class="H9lube">
-                                                        <div class="eqA2re NjwKYd" style="height:18px;width:18px">
-                                                        </div>
-                                                    </span>
-                                                    <div><span class="VuuXrf">Wikipedia</span>
-                                                        <div class="byrV5b"><cite class="qLRx3b tjvcx GvPZzd cHaqb"
-                                                                role="text">https://en.wikipedia.org<span
-                                                                    class="dyjrff ob9lvb" role="text"> › wiki ›
-                                                                    YouTube</span></cite>
-                                                            <div class="eFM0qc BCF2pd iUh30"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="csDOgf BCF2pd L48a4c">
-                                                    <div jscontroller="exgaYe" data-bsextraheight="0"
-                                                        data-darkmode="true" data-isdesktop="true"
-                                                        jsdata="l7Bhpb;_;B1XyUU cECq7c;_;B1XyUc"
-                                                        data-ved="2ahUKEwjOlOPKhd2BAxUdS_EDHVDWCMsQ2esEegQIHhAJ">
-                                                        <div role="button" tabindex="0" jsaction="RvIhPd"
-                                                            jsname="I3kE2c" class="iTPLzd rNSxBe lUn2nc"
-                                                            style="position:absolute" aria-label="About this result">
-                                                            <span jsname="czHhOd" class="D6lY4c mBswFe"><span
-                                                                    jsname="Bil8Ae" class="xTFaxe z1asCe"
-                                                                    style="height:18px;line-height:18px;width:18px"
-                                                                    jsportable="sass-ported"><svg focusable="false"
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        viewBox="0 0 24 24">
-                                                                        <path
-                                                                            d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z">
-                                                                        </path>
-                                                                    </svg></span></span>
-                                                        </div><span jsname="zOVa8"
-                                                            data-ved="2ahUKEwjOlOPKhd2BAxUdS_EDHVDWCMsQh-4GegQIHhAK"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        <div class="settingElement">
+          <label for="borderRadius-input">BorderRadius:</label>
+          <input
+            id="borderRadius-input"
+            type="range"
+            min="0"
+            max="100"
+            class="slider"
+          />
         </div>
+
+        <div class="settingElement">
+          <label for="borderPadding-input">BorderPadding:</label>
+          <input
+            id="borderPadding-input"
+            type="range"
+            min="0"
+            max="15"
+            class="slider"
+          />
+        </div>
+        <div class="settingElement">
+          <label for="borderMargin-input">BorderMargin:</label>
+          <input
+            id="borderMargin-input"
+            type="range"
+            min="-5"
+            max="15"
+            class="slider"
+          />
+        </div>
+      </div>
     </main>
     <script src="popup.js"></script>
-</body>
-
+  </body>
 </html>
