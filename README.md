@@ -19,10 +19,10 @@ While searching on the web, you can navigate through the corresponding search re
 # Install
 ### Firefox:
 You can download the extension on:\
-https://addons.mozilla.org/en-GB/firefox/addon/google-arrow-navigation/
+https://addons.mozilla.org/en-GB/firefox/addon/arrowkeys-for-search/
 
 ### Chrome:
-Currently it's not available in Google Web Store, but you can download it the zip [releases](https://github.com/jusnim/GoogleArrowNavigation/releases) or alternatively load it in your browser as an unpacked version
+Currently it's not available in Google Web Store, but you can download it the zip [releases](https://github.com/jusnim/ArrowKeys-For-Search/releases) or alternatively load it in your browser as an unpacked version
 I'm looking forward to release on the Store.
 
 
