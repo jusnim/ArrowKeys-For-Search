@@ -5,9 +5,11 @@ function getResults() {
 }
 
 function getSearchbarElement() {
-  return document.querySelector(
-    ".HeaderForm-InputWrapper > input"
-  );;
+  return document.querySelector(".HeaderForm-InputWrapper > input");
+}
+
+function getMoreResultsElement() {
+  return document.querySelector("div.Pager-Content div:last-of-type a");
 }
 
 function trackSelectableResults() {

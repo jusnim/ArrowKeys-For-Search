@@ -8,6 +8,10 @@ function getSearchbarElement() {
   return document.getElementById("search_form_input");
 }
 
+function getMoreResultsElement() {
+  return document.querySelector("#more-results");
+}
+
 function trackSelectableResults() {
   results = [];
   document

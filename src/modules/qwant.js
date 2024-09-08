@@ -6,7 +6,11 @@ function getResults() {
 function getSearchbarElement() {
   return document.querySelector(
     "form[data-testid='mainSearchBar'] > div > input"
-  );;
+  );
+}
+
+function getMoreResultsElement() {
+  return document.querySelector('button[data-testid="buttonShowMore"]');
 }
 
 function trackSelectableResults() {

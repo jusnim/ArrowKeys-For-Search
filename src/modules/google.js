@@ -4,14 +4,18 @@ function getResults() {
   return results;
 }
 function getSearchbarElement() {
-  return document.querySelector("textarea");;
+  return document.querySelector("textarea");
+}
+
+function getMoreResultsElement() {
+  return document.querySelector("#pnnext");
 }
 
 function trackSelectableResults() {
   results = [];
   linkSet = [];
 
-  // all links
+  // all regular results
   document
     .querySelector("#search")
     .querySelectorAll("a")
@@ -19,6 +23,13 @@ function trackSelectableResults() {
       if (a.querySelectorAll("cite").length > 0) {
         linkSet.push(a);
       }
+    });
+
+  // news
+  document
+    .querySelectorAll("#search div[data-news-cluster-id] a")
+    .forEach((a) => {
+      linkSet.push(a);
     });
 
   // APPROACH:
@@ -95,7 +106,7 @@ function updateScrollPosition() {
 
     // offsetY determines how far has been scrolled. No Scrolling -> eg. 200; far scrolling -> -700
     offsetY =
-      document.getElementById("appbar").getBoundingClientRect().height +
+      document.getElementById("topstuff").getBoundingClientRect().height +
       document.getElementById("sfcnt").getBoundingClientRect().bottom;
 
     scrollY = rect.bottom - offsetY - offsetYAdd - window.innerHeight / 3;

@@ -3,8 +3,15 @@ function getResults() {
   return results;
 }
 function getSearchbarElement() {
-  return document.querySelector(".search-form-input");;
+  return document.querySelector(".search-form-input");
 }
+
+function getMoreResultsElement() {
+  return document.querySelector(
+    "div.pagination-container form:last-of-type button"
+  );
+}
+
 function trackSelectableResults() {
   results = [];
   document.querySelectorAll(".result").forEach((el) => {

@@ -9,6 +9,10 @@ function getSearchbarElement() {
   return FOO;
 }
 
+function getMoreResultsElement() {
+  return FOO;
+}
+
 function trackSelectableResults() {
   results = [];
   FOO.forEach((el) => {

@@ -12,8 +12,11 @@
 // --- getResults()
 // get the results, that will be stylized
 
-// --- let getSearchbarElement()
+// --- getSearchbarElement()
 // get the searchbar - used for selection of the searchbar
+//
+// --- getMoreResultsElement()
+// get more results element - used for going to next site, if last result is hit
 
 // firefox and chrome support
 if (typeof browser === "undefined") {
@@ -39,13 +42,15 @@ async function injectCSS() {
   css = await browser.storage.local.get("css").then((e) => {
     return e.css;
   });
-  styleElement.innerText = css == null ? await returnSimpleCSS() : css
+  styleElement.innerText = css == null ? await returnSimpleCSS() : css;
 
-  async function inject(){document.head.appendChild(await styleElement)}
+  async function inject() {
+    document.head.appendChild(await styleElement);
+  }
   // inject as fast as possible
-  inject()
+  inject();
   // inject afterwards again, for correct
-  window.addEventListener('load', inject, false)
+  window.addEventListener("load", inject, false);
 }
 
 function selectSearchBar() {
@@ -54,9 +59,9 @@ function selectSearchBar() {
   }
   selectedElement = null;
 
-  searchbarElement = getSearchbarElement()
-  searchbarElement.setSelectionRange(0, searchbarElement.value.length)
-  document.activeElement.blur()
+  searchbarElement = getSearchbarElement();
+  searchbarElement.setSelectionRange(0, searchbarElement.value.length);
+  document.activeElement.blur();
   searchbarElement.click();
   searchbarElement.focus();
 }
@@ -87,6 +92,7 @@ function selectNextElement() {
 
   // triggering on last entry
   if (selectedElementIndex >= getResults().length - 1) {
+    getMoreResultsElement().click();
     return;
   }
   selectedElementIndex++;

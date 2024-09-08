@@ -5,9 +5,10 @@ function getResults() {
 }
 
 function getSearchbarElement() {
-  return document.querySelector(
-    "input[data-test-id='search-form-input']"
-  );
+  return document.querySelector("input[data-test-id='search-form-input']");
+}
+function getMoreResultsElement() {
+  return document.querySelector('a[data-test-id="next-button"]');
 }
 
 function trackSelectableResults() {
