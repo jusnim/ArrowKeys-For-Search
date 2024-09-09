@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "version": "2.2",
+  "version": "2.2.1",
   "name": "ArrowKeys For Search",
-  "description": "Arrow Keys can be used to navigate conveniently through search results of various search engines. Pages like Google, Startpage, Qwant and Ecosia are supported. A link can be 'clicked' with Enter",
+  "description": "Navigate conveniently with arrow keys through search results of various search engines. Pages like Google or Ecosia are supported.",
   "content_scripts": [
     {
       "matches": [
