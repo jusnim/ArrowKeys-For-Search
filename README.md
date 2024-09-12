@@ -22,9 +22,9 @@ You can download the extension on:\
 https://addons.mozilla.org/en-GB/firefox/addon/arrowkeys-for-search/
 
 ### Chrome:
-Currently it's not available in Google Web Store, but you can download it the zip [releases](https://github.com/jusnim/ArrowKeys-For-Search/releases) or alternatively load it in your browser as an unpacked version
-I'm looking forward to release on the Store.
-
+You can download the extension on:\
+https://chromewebstore.google.com/detail/arrowkeys-for-search/ifcjpjhkldldffkhflkkbmaganigpgna
+Alternatively but you can download the zip [releases](https://github.com/jusnim/ArrowKeys-For-Search/releases) and install it manually.
 
 # Design
 The design of the selected search result is customizable in 2 modes: simple and custom.\
