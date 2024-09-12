@@ -24,6 +24,7 @@ https://addons.mozilla.org/en-GB/firefox/addon/arrowkeys-for-search/
 ### Chrome:
 You can download the extension on:\
 https://chromewebstore.google.com/detail/arrowkeys-for-search/ifcjpjhkldldffkhflkkbmaganigpgna
+
 Alternatively but you can download the zip [releases](https://github.com/jusnim/ArrowKeys-For-Search/releases) and install it manually.
 
 # Design
