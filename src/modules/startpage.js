@@ -14,7 +14,7 @@ function getMoreResultsElement() {
 
 function trackSelectableResults() {
   results = [];
-  document.querySelectorAll(".result").forEach((el) => {
+  document.querySelectorAll(".w-gl .result").forEach((el) => {
     if (results.includes(el)) {
       return;
     }

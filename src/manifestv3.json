@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "version": "2.2.1",
+  "version": "2.2.2",
   "name": "ArrowKeys For Search",
   "description": "Navigate conveniently with arrow keys through search results of various search engines. Pages like Google or Ecosia are supported.",
   "content_scripts": [
@@ -387,7 +387,9 @@
     {
       "matches": [
         "http://*.startpage.com/sp/search*",
-        "https://*.startpage.com/sp/search*"
+        "https://*.startpage.com/sp/search*",
+        "http://*.startpage.com/do/search*",
+        "https://*.startpage.com/do/search*"
       ],
       "js": ["./modules/startpage.js", "storage.js", "main.js"],
       "run_at": "document_start"
